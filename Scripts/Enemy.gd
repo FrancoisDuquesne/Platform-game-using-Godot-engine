@@ -24,7 +24,7 @@ func _physics_process(delta):
 	motion = move_and_slide(motion, UP)
 	
 	if get_slide_collision(get_slide_count() - 1) != null and get_slide_collision(get_slide_count() - 1).collider.name == "Player":
-		damage_target(target, 10)
+		damage_target(target, 20)
 
 	
 	if is_on_wall():
@@ -33,8 +33,3 @@ func _physics_process(delta):
 		elif direction == right:
 			direction = left
 	
-#	func _physics_process(delta):
-#	var bodies = get_overlapping_bodies()
-#	for body in bodies:
-#		if body.name == "Player":
-#			get_tree().reload_current_scene()

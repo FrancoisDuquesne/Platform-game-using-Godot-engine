@@ -34,6 +34,8 @@ _____....-//___|  \_\  |  |=====| |   |_|_\\  ||  |___\\    .                 ..
 
 
 
--> implementer le fusil
+-> implementer le fusil (francois)
 	- viser et shooter
 	- perte de vie des enemy (death of shild instance) 
+
+-> trouver solution pour les erreurs ds code Enemy.gd (ligne 26): get collision part en couilles et on se retrouve avec une accumulation d'erreurs ds le Debugger.

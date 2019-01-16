@@ -9,7 +9,7 @@ const MAX_SPEED = 250
 const JUMP_HEIGHT = -600
 const LIVES = 3
 
-
+var Bullet = preload("res://Bullet.tscn")
 var motion = Vector2()
 enum STATES {ALIVE, DEAD}
 var state = ALIVE
@@ -26,13 +26,15 @@ func take_damage(count):
 		state = DEAD
 		emit_signal("died")
 	emit_signal("health_changed", health)
-
-
-func _physics_process(delta):
-	motion.y += GRAVITY 
 	
+	
+func get_input():
+	if Input.is_mouse_button_pressed(BUTTON_LEFT):
+		shoot()
+		
+	# Mouvment:
 	var friction = false
-	
+	motion.y += GRAVITY 
 	if Input.is_key_pressed(KEY_D) or Input.is_action_pressed("ui_right"):
 		motion.x += ACCELERATION
 		motion.x = min(motion.x + ACCELERATION, MAX_SPEED)
@@ -47,7 +49,7 @@ func _physics_process(delta):
 		friction = true
 	
 	if is_on_floor():
-		if Input.is_key_pressed(KEY_W) or Input.is_action_pressed("ui_up") or Input.is_mouse_button_pressed (BUTTON_LEFT):
+		if Input.is_key_pressed(KEY_W) or Input.is_action_pressed("ui_up"):
 			motion.y = JUMP_HEIGHT
 		if friction == true:
 			motion.x = lerp(motion.x, 0, 0.2)
@@ -55,12 +57,21 @@ func _physics_process(delta):
 		$Sprite.play("jump")
 		if friction == true:
 			motion.x = lerp(motion.x, 0, 0.05)
-		
+			
+func shoot():
+	var b = Bullet.instance()
+	var dir = (get_global_mouse_position() - self.global_position).normalized().angle()
+	b.start($Muzzle.global_position, dir)
+	get_parent().add_child(b)
+	
+
+func _physics_process(delta):
+	
+	get_input()
+	
 	if position.y > 550:
 		position.y = 0
 		position.x = 50
 		
-		
 	motion = move_and_slide(motion,UP)
 	pass
-	

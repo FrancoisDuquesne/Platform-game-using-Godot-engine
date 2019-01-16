@@ -23,7 +23,7 @@ func _physics_process(delta):
 	motion.y +=GRAVITY
 	motion = move_and_slide(motion, UP)
 	
-	if get_slide_collision(get_slide_count() - 1) != null and get_slide_collision(get_slide_count() - 1).collider.name == "Player":
+	if get_slide_collision(1) != null and get_slide_collision(1).collider.name == "Player":
 		damage_target(target, 20)
 
 	
